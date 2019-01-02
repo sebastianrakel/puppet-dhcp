@@ -27,7 +27,10 @@ class dhcp::params {
     }
     'FreeBSD': {
       $dhcp_dir         = '/usr/local/etc'
-      $packagename      = 'net/isc-dhcp43-server'
+      $packagename = $facts['os']['release']['major'] ? {
+        '12'    => 'net/isc-dhcp44-server',
+        default => 'net/isc-dhcp43-server',
+      }
       $servicename      = 'isc-dhcpd'
       $package_provider = undef
       $dhcpd_binary     = undef
